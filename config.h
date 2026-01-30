@@ -18,6 +18,6 @@
 
 // Define blocks for the status feed as X(icon, cmd, interval, signal).
 #define BLOCKS(X)             \
-    X("", "block_clock.sh", 60, 0)
+    X("", "block_clock.sh", 1, 0)
 
 #endif  // CONFIG_H
