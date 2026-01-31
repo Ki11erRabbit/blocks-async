@@ -23,6 +23,27 @@ size_t truncate_utf8_string(char* const buffer, const size_t size,
         }
 
         unsigned short skip = 1;
+        
+        // Skip status2d escape sequences (^c, ^b, ^d, ^f, ^r)
+        if (ch == '^' && i + 1 < size) {
+            char next = buffer[i + 1];
+            if (next == 'c' || next == 'b') {
+                // ^c#RRGGBB^ or ^b#RRGGBB^ - skip to next ^
+                skip = 1;
+                while (i + skip < size && buffer[i + skip] != '^' && buffer[i + skip] != '\0') {
+                    ++skip;
+                }
+                if (i + skip < size && buffer[i + skip] == '^') {
+                    ++skip; // include closing ^
+                }
+                i += skip;
+                continue; // Don't increment char_count for escape sequences
+            } else if (next == 'd' || next == 'f' || next == 'r') {
+                // ^d^, ^f^, ^r^ - skip these
+                i += 3; // skip ^X^
+                continue;
+            }
+        }
 
         // Multibyte unicode character.
         if ((ch & UTF8_MULTIBYTE_BIT) != 0) {
