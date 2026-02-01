@@ -18,8 +18,9 @@
 
 // Define blocks for the status feed as X(icon, cmd, interval, signal).
 #define BLOCKS(X)             \
-    X("", "block_weather.sh", 3600, 4) \
-    X("", "block_memory.sh", 30, 3) \
+    X("", "block_weather.sh", 3600, 5) \
+    X("", "block_memory.sh", 30, 4) \
+    X("", "block_volume.sh", 0, 3) \
     X("", "block_power.sh", 300, 2) \
     X("", "block_clock.sh", 1, 1)
 
